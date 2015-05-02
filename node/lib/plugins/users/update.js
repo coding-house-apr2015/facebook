@@ -21,18 +21,23 @@ exports.register = function(server, options, next){
         }
       },
       handler: function(request, reply){
-        console.log('the credentials are', request.auth.credentials);
+        User.findOne({uid: request.auth.credentials.uid}, function(err, user){
+          if(user){
+            User.findByIdAndUpdate(user._id, request.payload, saveCallback);
+          }else{
+            user = new User(request.payload);
+            user.uid = request.auth.credentials.uid;
+            user.save(saveCallback);
+          }
+        });
 
-
-        
-        var user = new User(request.payload);
-        user.save(function(err){
+        function saveCallback(err, user){
           if(err){
-            return reply(err).code(400);
+            return reply(JSON.stringify(err)).code(400);
           }else{
             return reply(user);
           }
-        });
+        }
       }
     }
   });
