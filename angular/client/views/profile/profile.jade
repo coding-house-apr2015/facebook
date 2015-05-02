@@ -1,0 +1,41 @@
+h3 PROFILE
+
+.row
+  .col-xs-4
+    h4 User Form
+    form(name='userForm', novalidate)
+      .form-group
+        label(for='email') Email
+        input.form-control#email(type='email', name='email', ng-model='user.email')
+      .form-group
+        label(for='avatar') Avatar
+        input.form-control#avatar(type='url', name='avatar', ng-model='user.avatar')
+      .form-group
+        label(for='gender') Gender
+        select.form-control#gender(name='gender', ng-model='user.gender')
+          option Male
+          option Female
+      .form-group
+        label(for='age') Age
+        input.form-control#age(type='number', name='age', ng-model='user.age')
+      .form-group
+        label(for='birthday') Birthday
+        input.form-control#birthday(type='date', name='birthday', ng-model='user.birthday')
+      .form-group
+        label(for='address') Address
+        textarea.form-control#address(name='address', ng-model='user.address')
+      .form-group
+        button.btn.btn-default(ng-click='update(user)') Update
+  .col-xs-8
+    h4 Photo Center
+    .row
+      .col-xs-12
+        button.btn.btn-success(ng-click='cameraOn()') Start
+        button.btn.btn-danger(ng-click='cameraOff()') Stop
+        button.btn.btn-warning(ng-click='takePhoto()') Snap
+    .row
+      .col-xs-4
+        #camera
+      .col-xs-4
+        img#photo(ng-src='{{user.photo}}')
+      .col-xs-4
