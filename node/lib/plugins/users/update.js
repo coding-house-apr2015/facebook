@@ -21,6 +21,10 @@ exports.register = function(server, options, next){
         }
       },
       handler: function(request, reply){
+        console.log('the credentials are', request.auth.credentials);
+
+
+        
         var user = new User(request.payload);
         user.save(function(err){
           if(err){

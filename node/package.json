@@ -9,6 +9,7 @@
     "good": "^6.1.2",
     "good-console": "^5.0.0",
     "hapi": "^8.4.0",
+    "hapi-auth-jwt": "^2.1.2",
     "hoek": "^2.12.0",
     "joi": "^6.4.1",
     "mongoose": "^4.0.2"

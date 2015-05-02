@@ -17,9 +17,24 @@ exports.init = function(port, cb){
     server.register(Plugins, function(err){
       if(err){return cb(err);}
 
+      server.auth.strategy('token', 'jwt', true, authenticate);
       server.start(function(err){
         return cb(err, server);
       });
     });
   });
+};
+
+var authenticate = {
+  key: 'sn6NA8r8MrgzKh5hNBr6Sr7sK2EmYOr7w8CTzc9P',
+  validateFunc: function(jwt, cb){
+    var now = Date.now();
+    var old = jwt.iat * 1000;
+
+    if(now > old){
+      cb(null, true, {uid: jwt.d.uid});
+    }else{
+      cb();
+    }
+  }
 };
