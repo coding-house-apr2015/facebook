@@ -1,15 +1,20 @@
 'use strict';
 
+var User = require('../models/user');
+
 exports.register = function(server, options, next){
 
   var authenticate = {
-    key: process.env.FIREBASE_JWT,
+    key: process.env.FIREBASE_SECRET,
     validateFunc: function(jwt, cb){
+      var past = jwt.iat * 1000;
       var now = Date.now();
-      var old = jwt.iat * 1000;
+      var future = past + process.env.FIREBASE_EXPIRE * 3600 * 1000;
 
-      if(now > old){
-        cb(null, true, {uid: jwt.d.uid});
+      if(past < now && now < future){
+        User.findOne({uid: jwt.d.uid}, function(err, user){
+          cb(null, true, {uid: jwt.d.uid, _id: user ? user._id : null});
+        });
       }else{
         cb();
       }
