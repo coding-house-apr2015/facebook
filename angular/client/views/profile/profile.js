@@ -4,6 +4,16 @@ angular.module('facebook')
 .controller('ProfileCtrl', function($scope, $window, Profile){
   $scope.user = {};
 
+  Profile.fetch()
+  .then(function(response){
+    $scope.user = response.data;
+    $scope.user.birthday = new Date(response.data.birthday);
+    delete response.data._id;
+    delete response.data.uid;
+    delete response.data.__v;
+    delete response.data.createdAt;
+  });
+
   $scope.update = function(user){
     Profile.update(user)
     .then(function(){

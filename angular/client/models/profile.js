@@ -10,5 +10,9 @@ angular.module('facebook')
     return $http.put(nodeUrl + '/profile', user);
   };
 
+  Profile.fetch = function(){
+    return $http.get(nodeUrl + '/profile');
+  };
+
   return Profile;
 });
